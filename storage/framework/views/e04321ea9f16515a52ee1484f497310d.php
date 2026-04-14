@@ -1,0 +1,114 @@
+<?php $__env->startSection('content'); ?>
+<?php if(session('status')): ?>
+<div class="alert alert-success" role="alert">
+    <?php echo e(session('status')); ?>
+
+</div>
+<?php endif; ?>
+<div class="container-fluid nss_style dashboard">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800"><span class="rental">Dashboard </span></h1>
+  </div>
+  
+  <?php
+  $user = auth()->user();
+  ?>
+
+  <?php if($user && $user->role === 'admin'): ?> 
+
+  <div class="row">
+    <div class="dashboard_main admin_dashboard">
+        <div class="icon_box">
+            <a href="<?php echo e(route('services.services_calendar')); ?>">
+                <div class="icon_box"></div>
+                <h3>Rental Calendar</h3>
+            </a>
+        </div>
+        <div class="icon_box">
+           <a href="<?php echo e(route('home.manage')); ?>">
+            <div class="icon_box"></div>
+            <h3>Manage</h3>
+        </a>
+    </div>
+    <div class="icon_box">
+       <a href="<?php echo e(route('assigncleaner.index')); ?>">
+        <div class="icon_box"></div>
+        <h3>Assign Cleaners</h3>
+    </a>
+</div>
+<div class="icon_box">
+    <a href="<?php echo e(route('contactowner.create')); ?>">
+        <div class="icon_box"></div>
+        <h3>Contact Owners</h3>
+    </a>
+</div>
+</div>
+</div>
+
+<?php elseif($user && $user->role === 'owner'): ?>
+
+<div class="row">
+    <div class="dashboard_main owner_dashboard">
+        <h2>Request Rental Cleaning Service</h2> 
+        <div class="icon_box">
+            <a href="<?php echo e(route('owner-services.create')); ?>">
+                <div class="icon_box"><img class="logo" src="<?php echo e(asset('images/plus.png')); ?>" /></div>
+                <h3>Insert Dates</h3>
+            </a>
+        </div>
+
+        <div class="icon_box">
+           <a href="<?php echo e(route('owner.owner_get_date')); ?>">
+            <div class="icon_box"><img class="logo" src="<?php echo e(asset('images/calender.png')); ?>" /></div>
+            <h3>View Dates</h3>
+        </a>
+    </div>
+
+    <div class="icon_box">
+       <a href="<?php echo e(route('owner.owner_edit_date')); ?>">
+        <div class="icon_box"><img class="logo" src="<?php echo e(asset('images/edit.png')); ?>" /></div>
+        <h3>Edit Dates</h3>
+    </a>
+</div>
+<div class="icon_box">
+    <a href="<?php echo e(route('owner.owner_contact_bclean')); ?>">
+        <div class="icon_box"><img class="logo" src="<?php echo e(asset('images/mail.png')); ?>" /></div>
+        <h3>Contact BClean</h3>
+    </a>
+</div>
+</div>
+</div>
+
+
+<div class="row">    
+ <div class="box_section">   
+    <h2>Other Service Provided</h2> 
+    <div class="box_one_item">
+        <a href="https://hawaiiproclean.com/request-form/">
+            <span><img class="logo" src="<?php echo e(asset('images/1.png')); ?>" /></span>
+            <h3>Request for Room Supplies</h3>
+            <p>Our efficient team has the supplies and the knowledge for a quick turnaround.</p>
+        </a>
+    </div>
+    <div class="box_one_item">
+        <a href="https://hawaiiproclean.com/request-form/">
+            <span><img class="logo" src="<?php echo e(asset('images/2.png')); ?>" /></span>
+            <h3>Request for Maintenance</h3>
+            <p>From minor repairs to large overhaul projects, we assess, consult, and restore everything that needs attention.</p>
+        </a>
+    </div>
+    <div class="box_one_item">
+        <a href="https://hawaiiproclean.com/request-form/">
+            <span><img class="logo" src="<?php echo e(asset('images/3.png')); ?>" /></span>
+            <h3>Request for Repair</h3>
+            <p>Leaky faucets or a loose doorknob, our experienced, high-quality handymen services will fix your unit from everyday wear and tear.</p>
+        </a>
+    </div>
+</div>
+</div>
+
+
+<?php endif; ?>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/1241039.cloudwaysapps.com/yuhjztazqa/public_html/resources/views/home.blade.php ENDPATH**/ ?>
