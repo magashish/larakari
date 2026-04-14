@@ -80,6 +80,11 @@ Route::middleware('admin')->group(function () {
     Route::delete('maintenance-log/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'destroy'])->name('maintenance-log.destroy');
     Route::get('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'indexMaintenance'])->name('maintenance-log.index');
 
+    // Unified save — type is encoded in the URL path so it cannot be lost
+    Route::post('log-save/{type}', [App\Http\Controllers\MaintenanceLogController::class, 'save'])
+        ->name('log-save')
+        ->where('type', 'issue|maintenance');
+
 
 
 

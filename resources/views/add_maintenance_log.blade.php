@@ -32,9 +32,8 @@
 
             <div class="card shadow">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('maintenance-log.store') }}">
+                    <form method="POST" action="{{ route('log-save', 'maintenance') }}">
                         @csrf
-                        <input type="hidden" name="type" value="maintenance">
 
                         <div class="row mb-3">
                             <label for="unit_id" class="col-md-4 col-form-label text-md-end">{{ __('Unit #') }} <span class="text-danger">*</span></label>

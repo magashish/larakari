@@ -96,6 +96,35 @@ class MaintenanceLogController extends Controller
             ->with('status', 'Maintenance log entry added successfully.');
     }
 
+    // ── Unified save (type comes from URL path, not form body) ─────────────────
+
+    public function save(Request $request, string $type)
+    {
+        $request->validate([
+            'unit_id'     => 'required|integer|exists:units,id',
+            'date'        => 'required|date',
+            'description' => 'required|string',
+            'amount'      => 'required|numeric|min:0',
+        ]);
+
+        MaintenanceLog::create([
+            'user_id'     => Auth::id(),
+            'type'        => $type,
+            'unit_id'     => $request->unit_id,
+            'date'        => $request->date,
+            'description' => $request->description,
+            'amount'      => $request->amount,
+        ]);
+
+        if ($type === 'issue') {
+            return redirect()->route('issue-items.index')
+                ->with('status', 'Issue item added successfully.');
+        }
+
+        return redirect()->route('maintenance-log.index')
+            ->with('status', 'Maintenance log entry added successfully.');
+    }
+
     // ── Shared ─────────────────────────────────────────────────────────────────
 
     public function destroy($id)
