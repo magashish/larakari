@@ -66,11 +66,19 @@ Route::middleware('admin')->group(function () {
     Route::resource('contactowner', App\Http\Controllers\ContactOwnerController::class);
     Route::resource('assigncleaner', App\Http\Controllers\CleanersInformationSchedule::class);
 
-    Route::get('maintenance-log/create', [App\Http\Controllers\MaintenanceLogController::class, 'create'])->name('maintenance-log.create');
-    Route::post('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'store'])->name('maintenance-log.store');
-    Route::get('maintenance-log/unit/{unit_id}', [App\Http\Controllers\MaintenanceLogController::class, 'index'])->name('maintenance-log.by_unit');
+    // Issue Items
+    Route::get('issue-items/create', [App\Http\Controllers\MaintenanceLogController::class, 'createIssue'])->name('issue-items.create');
+    Route::post('issue-items', [App\Http\Controllers\MaintenanceLogController::class, 'storeIssue'])->name('issue-items.store');
+    Route::get('issue-items/unit/{unit_id}', [App\Http\Controllers\MaintenanceLogController::class, 'indexIssue'])->name('issue-items.by_unit');
+    Route::delete('issue-items/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'destroy'])->name('issue-items.destroy');
+    Route::get('issue-items', [App\Http\Controllers\MaintenanceLogController::class, 'indexIssue'])->name('issue-items.index');
+
+    // Maintenance Log
+    Route::get('maintenance-log/create', [App\Http\Controllers\MaintenanceLogController::class, 'createMaintenance'])->name('maintenance-log.create');
+    Route::post('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'storeMaintenance'])->name('maintenance-log.store');
+    Route::get('maintenance-log/unit/{unit_id}', [App\Http\Controllers\MaintenanceLogController::class, 'indexMaintenance'])->name('maintenance-log.by_unit');
     Route::delete('maintenance-log/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'destroy'])->name('maintenance-log.destroy');
-    Route::get('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'index'])->name('maintenance-log.index');
+    Route::get('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'indexMaintenance'])->name('maintenance-log.index');
 
 
 

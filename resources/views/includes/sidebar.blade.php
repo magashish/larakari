@@ -124,6 +124,18 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="nav-link collapsed {{ Str::contains(url()->current(), '/issue-items') ? 'active' : '' }}" href="{{ route('issue-items.index') }}" data-toggle="collapse" data-target="#collapseIssueItems" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        <span>Issue Items</span>
+    </a>
+    <div id="collapseIssueItems" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item {{ $currentUrl === route('issue-items.index') ? 'active' : '' }}" href="{{ route('issue-items.index') }}">View Issues</a>
+            <a class="collapse-item {{ $currentUrl === route('issue-items.create') ? 'active' : '' }}" href="{{ route('issue-items.create') }}">Add Issue</a>
+        </div>
+    </div>
+</li>
+<li class="nav-item">
     <a class="nav-link collapsed {{ Str::contains(url()->current(), '/maintenance-log') ? 'active' : '' }}" href="{{ route('maintenance-log.index') }}" data-toggle="collapse" data-target="#collapseMaintenance" aria-expanded="true" aria-controls="collapsePages">
         <i class="fa fa-wrench" aria-hidden="true"></i>
         <span>Maintenance Log</span>

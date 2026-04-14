@@ -8,26 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class MaintenanceLogController extends Controller
 {
-    public function index($unit_id = 0)
-    {
-        if ($unit_id) {
-            $logs = MaintenanceLog::where('unit_id', $unit_id)
-                ->orderBy('date', 'desc')
-                ->paginate(20);
-        } else {
-            $logs = MaintenanceLog::orderBy('date', 'desc')
-                ->paginate(20);
-        }
+    // ── Issue Items ────────────────────────────────────────────────────────────
 
-        return view('maintenance_logs', compact('logs', 'unit_id'));
+    public function indexIssue($unit_id = 0)
+    {
+        $logs = MaintenanceLog::where('type', 'issue')
+            ->when($unit_id, fn($q) => $q->where('unit_id', $unit_id))
+            ->orderBy('date', 'desc')
+            ->paginate(20);
+
+        return view('issue_items', compact('logs', 'unit_id'));
     }
 
-    public function create()
+    public function createIssue()
     {
-        return view('add_maintenance_log');
+        return view('add_issue_item');
     }
 
-    public function store(Request $request)
+    public function storeIssue(Request $request)
     {
         $request->validate([
             'unit_id'     => 'required|integer|exists:units,id',
@@ -38,6 +36,46 @@ class MaintenanceLogController extends Controller
 
         MaintenanceLog::create([
             'user_id'     => Auth::id(),
+            'type'        => 'issue',
+            'unit_id'     => $request->unit_id,
+            'date'        => $request->date,
+            'description' => $request->description,
+            'amount'      => $request->amount,
+        ]);
+
+        return redirect()->route('issue-items.index')
+            ->with('status', 'Issue item added successfully.');
+    }
+
+    // ── Maintenance Log ────────────────────────────────────────────────────────
+
+    public function indexMaintenance($unit_id = 0)
+    {
+        $logs = MaintenanceLog::where('type', 'maintenance')
+            ->when($unit_id, fn($q) => $q->where('unit_id', $unit_id))
+            ->orderBy('date', 'desc')
+            ->paginate(20);
+
+        return view('maintenance_logs', compact('logs', 'unit_id'));
+    }
+
+    public function createMaintenance()
+    {
+        return view('add_maintenance_log');
+    }
+
+    public function storeMaintenance(Request $request)
+    {
+        $request->validate([
+            'unit_id'     => 'required|integer|exists:units,id',
+            'date'        => 'required|date',
+            'description' => 'required|string',
+            'amount'      => 'required|numeric|min:0',
+        ]);
+
+        MaintenanceLog::create([
+            'user_id'     => Auth::id(),
+            'type'        => 'maintenance',
             'unit_id'     => $request->unit_id,
             'date'        => $request->date,
             'description' => $request->description,
@@ -48,12 +86,14 @@ class MaintenanceLogController extends Controller
             ->with('status', 'Maintenance log entry added successfully.');
     }
 
+    // ── Shared ─────────────────────────────────────────────────────────────────
+
     public function destroy($id)
     {
         $log = MaintenanceLog::findOrFail($id);
         $log->delete();
 
         return redirect()->back()
-            ->with('status', 'Maintenance log entry deleted successfully.');
+            ->with('status', 'Entry deleted successfully.');
     }
 }
