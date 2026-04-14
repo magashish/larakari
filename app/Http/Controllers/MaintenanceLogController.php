@@ -34,9 +34,14 @@ class MaintenanceLogController extends Controller
             'amount'      => 'required|numeric|min:0',
         ]);
 
+        // Use the type from the hidden form field; fall back to 'issue'
+        $type = in_array($request->input('type'), ['issue', 'maintenance'])
+            ? $request->input('type')
+            : 'issue';
+
         MaintenanceLog::create([
             'user_id'     => Auth::id(),
-            'type'        => 'issue',
+            'type'        => $type,
             'unit_id'     => $request->unit_id,
             'date'        => $request->date,
             'description' => $request->description,
@@ -73,9 +78,14 @@ class MaintenanceLogController extends Controller
             'amount'      => 'required|numeric|min:0',
         ]);
 
+        // Use the type from the hidden form field; fall back to 'maintenance'
+        $type = in_array($request->input('type'), ['issue', 'maintenance'])
+            ? $request->input('type')
+            : 'maintenance';
+
         MaintenanceLog::create([
             'user_id'     => Auth::id(),
-            'type'        => 'maintenance',
+            'type'        => $type,
             'unit_id'     => $request->unit_id,
             'date'        => $request->date,
             'description' => $request->description,
