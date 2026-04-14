@@ -63,8 +63,14 @@ Route::middleware('admin')->group(function () {
     Route::get('/manage', [App\Http\Controllers\HomeController::class, 'manage'])->name('home.manage');
 
 
-    Route::resource('contactowner', App\Http\Controllers\ContactOwnerController::class);    
+    Route::resource('contactowner', App\Http\Controllers\ContactOwnerController::class);
     Route::resource('assigncleaner', App\Http\Controllers\CleanersInformationSchedule::class);
+
+    Route::get('maintenance-log/create', [App\Http\Controllers\MaintenanceLogController::class, 'create'])->name('maintenance-log.create');
+    Route::post('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'store'])->name('maintenance-log.store');
+    Route::get('maintenance-log/unit/{unit_id}', [App\Http\Controllers\MaintenanceLogController::class, 'index'])->name('maintenance-log.by_unit');
+    Route::delete('maintenance-log/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'destroy'])->name('maintenance-log.destroy');
+    Route::get('maintenance-log', [App\Http\Controllers\MaintenanceLogController::class, 'index'])->name('maintenance-log.index');
 
 
 
