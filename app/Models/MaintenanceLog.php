@@ -9,5 +9,5 @@ class MaintenanceLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'type', 'unit_id', 'date', 'description', 'amount'];
+    protected $fillable = ['user_id', 'type', 'unit_id', 'date', 'description', 'amount', 'notes'];
 }

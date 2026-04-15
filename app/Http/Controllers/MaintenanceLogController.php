@@ -34,7 +34,6 @@ class MaintenanceLogController extends Controller
             'amount'      => 'required|numeric|min:0',
         ]);
 
-        // Use the type from the hidden form field; fall back to 'issue'
         $type = in_array($request->input('type'), ['issue', 'maintenance'])
             ? $request->input('type')
             : 'issue';
@@ -46,6 +45,7 @@ class MaintenanceLogController extends Controller
             'date'        => $request->date,
             'description' => $request->description,
             'amount'      => $request->amount,
+            'notes'       => $request->notes,
         ]);
 
         return redirect()->route('issue-items.index')
@@ -78,7 +78,6 @@ class MaintenanceLogController extends Controller
             'amount'      => 'required|numeric|min:0',
         ]);
 
-        // Use the type from the hidden form field; fall back to 'maintenance'
         $type = in_array($request->input('type'), ['issue', 'maintenance'])
             ? $request->input('type')
             : 'maintenance';
@@ -90,6 +89,7 @@ class MaintenanceLogController extends Controller
             'date'        => $request->date,
             'description' => $request->description,
             'amount'      => $request->amount,
+            'notes'       => $request->notes,
         ]);
 
         return redirect()->route('maintenance-log.index')
@@ -114,6 +114,7 @@ class MaintenanceLogController extends Controller
             'date'        => $request->date,
             'description' => $request->description,
             'amount'      => $request->amount,
+            'notes'       => $request->notes,
         ]);
 
         if ($type === 'issue') {

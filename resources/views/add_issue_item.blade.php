@@ -81,6 +81,16 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="notes" class="col-md-4 col-form-label text-md-end">{{ __('Notes') }}</label>
+                            <div class="col-md-6">
+                                <textarea id="notes" name="notes" rows="3" class="form-control @error('notes') is-invalid @enderror">{{ old('notes') }}</textarea>
+                                @error('notes')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
                                 <a href="{{ route('issue-items.index') }}" class="btn btn-secondary ms-2">{{ __('Cancel') }}</a>

@@ -80,6 +80,7 @@
                             <th>Date</th>
                             <th>Description</th>
                             <th>Amount</th>
+                            <th>Notes</th>
                             <th>Date Created</th>
                             <th>Actions</th>
                         </tr>
@@ -91,6 +92,7 @@
                             <td>{{ \Carbon\Carbon::parse($log->date)->format('F d, Y') }}</td>
                             <td>{{ $log->description }}</td>
                             <td>${{ number_format($log->amount, 2) }}</td>
+                            <td>{{ $log->notes }}</td>
                             <td>{{ \Carbon\Carbon::parse($log->created_at)->format('l, d F Y \a\t h:i A') }}</td>
                             <td class="action">
                                 <form method="post" action="{{ route('issue-items.destroy', $log->id) }}" class="delete-form">
