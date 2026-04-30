@@ -85,6 +85,11 @@ Route::middleware('admin')->group(function () {
         ->name('log-save')
         ->where('type', 'issue|maintenance');
 
+    // Shared edit, update, delete — plain POST routes, no method spoofing needed
+    Route::get('log-edit/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'edit'])->name('log-edit');
+    Route::post('log-update/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'update'])->name('log-update');
+    Route::post('log-delete/{id}', [App\Http\Controllers\MaintenanceLogController::class, 'destroy'])->name('log-delete');
+
 
 
 

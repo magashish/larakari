@@ -126,14 +126,54 @@ class MaintenanceLogController extends Controller
             ->with('status', 'Maintenance log entry added successfully.');
     }
 
-    // ── Shared ─────────────────────────────────────────────────────────────────
+    // ── Shared edit / update / delete ─────────────────────────────────────────
+
+    public function edit($id)
+    {
+        $log = MaintenanceLog::findOrFail($id);
+        return view('edit_maintenance_log', compact('log'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $log = MaintenanceLog::findOrFail($id);
+
+        $request->validate([
+            'unit_id'     => 'required|integer|exists:units,id',
+            'date'        => 'required|date',
+            'description' => 'required|string',
+            'amount'      => 'required|numeric|min:0',
+        ]);
+
+        $log->update([
+            'unit_id'     => $request->unit_id,
+            'date'        => $request->date,
+            'description' => $request->description,
+            'amount'      => $request->amount,
+            'notes'       => $request->notes,
+        ]);
+
+        if ($log->type === 'issue') {
+            return redirect()->route('issue-items.index')
+                ->with('status', 'Issue item updated successfully.');
+        }
+
+        return redirect()->route('maintenance-log.index')
+            ->with('status', 'Maintenance log entry updated successfully.');
+    }
 
     public function destroy($id)
     {
         $log = MaintenanceLog::findOrFail($id);
+        $type = $log->type;
         $log->delete();
 
-        return redirect()->back()
+        if ($type === 'issue') {
+            return redirect()->route('issue-items.index')
+                ->with('status', 'Entry deleted successfully.');
+        }
+
+        return redirect()->route('maintenance-log.index')
             ->with('status', 'Entry deleted successfully.');
     }
 }

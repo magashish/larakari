@@ -57,10 +57,10 @@
                             <div><strong>Created At </strong> {{ \Carbon\Carbon::parse($log->created_at)->format('l, d F Y \a\t h:i A') }}</div>
                             &nbsp;
                             <div class="action">
-                                <form method="post" action="{{ route('issue-items.destroy', $log->id) }}">
-                                    @method('delete')
+                                <a href="{{ route('log-edit', $log->id) }}" class="btn btn-success btn-sm mb-1"><i class="fas fa-pen"></i></a>
+                                <form method="post" action="{{ route('log-delete', $log->id) }}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this entry?')">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm mb-1 delete-btn"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i class="fas fa-trash"></i></button>
                                 </form>
                             </div>
                         </div>
@@ -95,10 +95,10 @@
                             <td>{{ $log->notes }}</td>
                             <td>{{ \Carbon\Carbon::parse($log->created_at)->format('l, d F Y \a\t h:i A') }}</td>
                             <td class="action">
-                                <form method="post" action="{{ route('issue-items.destroy', $log->id) }}" class="delete-form">
-                                    @method('delete')
+                                <a href="{{ route('log-edit', $log->id) }}" class="btn btn-success btn-sm mb-1"><i class="fas fa-pen"></i></a>
+                                <form method="post" action="{{ route('log-delete', $log->id) }}" class="delete-form d-inline" onsubmit="return confirm('Are you sure you want to delete this entry?')">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm mb-1 delete-btn"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
